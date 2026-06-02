@@ -57,20 +57,20 @@ export default function GitHubSection() {
 
           {/* Contribution graph */}
           <motion.div initial={{ opacity:0, x:20 }} animate={inView?{opacity:1,x:0}:{}} transition={{ delay:.3 }}>
-            <div style={{ background:'rgba(11,15,26,0.9)', border:'1px solid rgba(37,99,235,0.14)', borderRadius:20, padding:'22px', overflowX:'auto' }}>
-              <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:14 }}>
+            <div style={{ background:'rgba(11,15,26,0.9)', border:'1px solid rgba(37,99,235,0.14)', borderRadius:20, padding:'22px' }}>
+              <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:14, flexWrap:'wrap' }}>
                 <Activity size={15} color="#60a5fa"/>
                 <span style={{ fontSize:14, fontWeight:600, color:'#f0f2f8' }}>Contribution Activity</span>
                 <span style={{ fontSize:12, color:'#64748b', marginLeft:'auto' }}>Past 12 months</span>
               </div>
               {/* Month labels */}
-              <div style={{ display:'flex', gap:2, marginBottom:4 }}>
+              <div className="gh-months" style={{ display:'flex', gap:2, marginBottom:4, overflowX:'auto' }}>
                 {MOS.map(m => <span key={m} style={{ flex:1, fontSize:9, color:'#334155', minWidth:0 }}>{m}</span>)}
               </div>
               {/* Graph */}
-              <div style={{ display:'flex', gap:2 }}>
+              <div className="gh-graph" style={{ display:'flex', gap:2, overflowX:'auto', paddingBottom:4 }}>
                 {Array.from({length:52},(_,w) => (
-                  <div key={w} style={{ display:'flex', flexDirection:'column', gap:2 }}>
+                  <div key={w} style={{ display:'flex', flexDirection:'column', gap:2, flexShrink:0 }}>
                     {Array.from({length:7},(_,d) => (
                       <div key={d} style={{ width:11, height:11, borderRadius:3, background:LVL[contrib(w,d)], transition:'transform .1s' }}
                         onMouseEnter={e=>{ (e.currentTarget as HTMLElement).style.transform='scale(1.3)'; }}

@@ -190,13 +190,17 @@ body {
   .phil-grid   { grid-template-columns: 1fr 1fr !important; }
   .stat-strip  { grid-template-columns: 1fr 1fr !important; }
   .side-dots   { display: none !important; }
+  .tech-canvas { height: 420px !important; }
+  .gh-graph, .gh-months { -webkit-overflow-scrolling: touch; scrollbar-width: thin; }
   h1 { font-size: clamp(28px,8vw,44px) !important; }
 }
 @media (max-width: 480px) {
   .phil-grid   { grid-template-columns: 1fr !important; }
   .expertise-grid { grid-template-columns: 1fr !important; }
+  .tech-canvas { height: 380px !important; }
 }
 @media (min-width: 769px) and (max-width: 1024px) {
   .phil-grid   { grid-template-columns: 1fr 1fr !important; }
   .expertise-grid { grid-template-columns: 1fr 1fr !important; }
+  .tech-canvas { height: 480px !important; }
 }

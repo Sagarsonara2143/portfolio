@@ -82,16 +82,12 @@ export default function TechEcosystem() {
         {/* ── Floating canvas ── */}
         <motion.div
           initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}} transition={{ duration: .5, delay: .2 }}
+          className="tech-canvas"
           style={{
             position: 'relative',
             width: '100%',
             height: 560,
-            // borderRadius: 28,
-            // Clip overflow so nothing pokes out
             overflow: 'hidden',
-            // background: 'linear-gradient(180deg, rgba(11,15,26,0.55) 0%, rgba(6,9,18,0.80) 100%)',
-            // border: '1px solid rgba(37,99,235,0.09)',
-            // boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.03)',
           }}
         >
           {/* Subtle grid */}
@@ -184,14 +180,14 @@ export default function TechEcosystem() {
         </motion.div>
 
         {/* Size legend */}
-        <div style={{ display: 'flex', justifyContent: 'center', gap: 22, marginTop: 16, flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: 22, marginTop: 16, flexWrap: 'wrap', padding: '0 16px' }}>
           {[{ l: 'Core techs', d: 14 }, { l: 'Primary stack', d: 11 }, { l: 'Supporting tools', d: 8 }].map(({ l, d }) => (
             <div key={l} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: '#334155' }}>
               <div style={{ width: d, height: d, borderRadius: 3, background: 'rgba(37,99,235,0.28)', border: '1px solid rgba(37,99,235,0.4)' }} />
               {l}
             </div>
           ))}
-          <span style={{ fontSize: 12, color: '#1e293b' }}>· Hover to reveal · Filter by category</span>
+          <span className="hide-mobile" style={{ fontSize: 12, color: '#1e293b' }}>· Hover to reveal · Filter by category</span>
         </div>
       </div>
     </section>

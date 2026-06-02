@@ -43,7 +43,7 @@ export default function SummarySection() {
           {/* Bio */}
           <motion.div initial={{ opacity:0, x:-30 }} animate={inView?{opacity:1,x:0}:{}} transition={{ duration:.6, delay:.2 }}>
             <p style={{ fontSize:17, color:'#94a3b8', lineHeight:1.85, marginBottom:22 }}>
-              I&apos;m <strong style={{ color:'#f0f2f8', fontWeight:700 }}>Sagar Rameshbhai Sonara</strong> — a Python Developer with <strong style={{ color:'#60a5fa' }}>3+ years</strong> of hands-on experience building scalable backend systems, RESTful APIs, and enterprise-grade web applications from Ahmedabad, India.
+              I&apos;m <strong style={{ color:'#f0f2f8', fontWeight:700 }}>Sagar Sonara</strong> — a Python Developer with <strong style={{ color:'#60a5fa' }}>3+ years</strong> of hands-on experience building scalable backend systems, RESTful APIs, and enterprise-grade web applications from Ahmedabad, India.
             </p>
             <p style={{ fontSize:17, color:'#94a3b8', lineHeight:1.85, marginBottom:28 }}>
               I specialize in <strong style={{ color:'#60a5fa' }}>Django REST Framework, FastAPI, and Flask</strong>, with deep expertise in multi-tenant SaaS architecture, Stripe payment integration, subscription management, web scraping, and process automation. Currently building <strong style={{ color:'#38bdf8' }}>DwERP</strong> — a multi-tenant ERP for the fenestration industry — at MSBC Group.

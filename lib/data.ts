@@ -1,6 +1,6 @@
 export const personalInfo = {
   name: 'Sagar Sonara',
-  fullName: 'Sagar Rameshbhai Sonara',
+  fullName: 'Sagar Sonara',
   role: 'Python Developer',
   tagline: 'Backend & API Engineering',
   location: 'Ahmedabad, India',
