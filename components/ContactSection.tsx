@@ -1,12 +1,11 @@
 'use client';
-/* eslint-disable */
 import React, { useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Mail, Phone, MapPin, Send, CheckCircle, GitBranch, Link2, AlertCircle } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, CheckCircle, GitBranch, Link2, AlertCircle, Copy, Check } from 'lucide-react';
 import { personalInfo } from '@/lib/data';
 
 const CONTACTS = [
-  { icon:Mail,     label:'Email',    value:personalInfo.email,            href:'mailto:'+personalInfo.email,   color:'#3b82f6' },
+  { icon:Mail,     label:'Email',    value:personalInfo.email,            href:'mailto:'+personalInfo.email,   color:'#3b82f6', copyable:true },
   { icon:Phone,    label:'Phone',    value:personalInfo.phone,            href:'tel:+917801950401',             color:'#0ea5e9' },
   { icon:Link2,    label:'LinkedIn', value:'linkedin.com/in/sagarsonara', href:personalInfo.linkedin,           color:'#2563eb' },
   { icon:GitBranch,label:'GitHub',   value:'github.com/sagarsonara2143',  href:personalInfo.github,             color:'#22c55e' },
@@ -21,6 +20,7 @@ export default function ContactSection() {
   const [form,  setForm]   = useState({ name:'', email:'', subject:'', message:'' });
   const [status,setStatus] = useState<Status>('idle');
   const [errMsg,setErrMsg] = useState('');
+  const [copied,setCopied] = useState(false);
 
   const inp: React.CSSProperties = {
     width:'100%', padding:'11px 14px',
@@ -61,6 +61,12 @@ export default function ContactSection() {
     setForm({ name:'', email:'', subject:'', message:'' });
   };
 
+  const copyEmail = () => {
+    navigator.clipboard.writeText(personalInfo.email);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
     <section id="contact" ref={ref} style={{ padding:'100px 24px', background:'#0b0f1a', position:'relative', overflow:'hidden' }}>
       <div className="dot-bg" style={{ position:'absolute', inset:0, opacity:.18 }}/>
@@ -89,7 +95,7 @@ export default function ContactSection() {
                   <div style={{ width:40, height:40, borderRadius:11, background:c.color+'18', border:'1px solid '+c.color+'28', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
                     <c.icon size={17} color={c.color}/>
                   </div>
-                  <div>
+                  <div style={{ flex:1 }}>
                     <div style={{ fontSize:11, color:'#334155', fontWeight:700, textTransform:'uppercase', letterSpacing:'.07em', marginBottom:3 }}>{c.label}</div>
                     {c.href
                       ? <a href={c.href} target={c.href.startsWith('http')||c.href.startsWith('mailto')?'_blank':undefined} rel="noopener noreferrer"
@@ -100,6 +106,14 @@ export default function ContactSection() {
                       : <span style={{ fontSize:13, color:'#cbd5e1' }}>{c.value}</span>
                     }
                   </div>
+                  {c.copyable && (
+                    <button onClick={copyEmail} style={{ display:'flex', alignItems:'center', gap:4, padding:'6px 10px', background:copied?'rgba(34,197,94,0.15)':'rgba(37,99,235,0.08)', border:'1px solid '+(copied?'rgba(34,197,94,0.3)':'rgba(37,99,235,0.15)'), borderRadius:8, cursor:'pointer', color:copied?'#22c55e':'#60a5fa', fontSize:12, fontWeight:500, transition:'all .2s', flexShrink:0 }}
+                      onMouseEnter={e=>{ if(!copied) { (e.currentTarget as HTMLElement).style.background='rgba(37,99,235,0.15)'; } }}
+                      onMouseLeave={e=>{ if(!copied) { (e.currentTarget as HTMLElement).style.background='rgba(37,99,235,0.08)'; } }}
+                    >
+                      {copied ? <><Check size={12}/>Copied</> : <><Copy size={12}/>Copy</>}
+                    </button>
+                  )}
                 </motion.div>
               ))}
             </div>

@@ -1,5 +1,4 @@
 'use client';
-/* eslint-disable */
 import React from 'react';
 import { Download, ArrowUp, MapPin, Terminal, GitBranch, Link2, Mail, Phone, ExternalLink } from 'lucide-react';
 import { personalInfo } from '@/lib/data';
@@ -85,6 +84,12 @@ export default function Footer() {
                 <div style={{ position:'absolute', inset:0, background:'linear-gradient(to bottom, transparent 40%, rgba(4,6,14,0.3))', pointerEvents:'none' }}/>
                 <div style={{ position:'absolute', top:'50%', left:'50%', transform:'translate(-50%, -50%)', width:10, height:10, borderRadius:'50%', background:'#f59e0b', border:'2px solid rgba(255,255,255,0.9)', boxShadow:'0 0 16px rgba(245,158,11,0.7)', animation:'pulse-pin 2s infinite', pointerEvents:'none' }}/>
               </div>
+              <a href="https://www.google.com/maps?q=23.0288299,72.5063017" target="_blank" rel="noopener noreferrer" style={{ display:'block', padding:'8px 12px', background:'rgba(245,158,11,0.08)', borderTop:'1px solid rgba(255,255,255,0.05)', textAlign:'center', fontSize:11, color:'#f59e0b', textDecoration:'none', fontWeight:500, transition:'background .2s' }}
+                onMouseEnter={e=>{ (e.currentTarget as HTMLElement).style.background='rgba(245,158,11,0.15)'; }}
+                onMouseLeave={e=>{ (e.currentTarget as HTMLElement).style.background='rgba(245,158,11,0.08)'; }}
+              >
+                <ExternalLink size={10} style={{ display:'inline', marginRight:4 }}/>View in Google Maps
+              </a>
             </div>
           </div>
         </div>

@@ -1,5 +1,4 @@
 'use client';
-/* eslint-disable */
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Hash, Download, Mail, ExternalLink, GitBranch, X, Sun, Moon } from 'lucide-react';
@@ -79,6 +78,11 @@ export default function CommandPalette({ isOpen, onClose }: { isOpen: boolean; o
           </motion.div>
         </motion.div>
       )}
+      <style>{`
+        @media(max-width:768px) {
+          .command-palette-overlay { padding-top: 60px !important; }
+        }
+      `}</style>
     </AnimatePresence>
   );
 }

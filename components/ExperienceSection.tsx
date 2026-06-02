@@ -1,5 +1,4 @@
 'use client';
-/* eslint-disable */
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { MapPin, Calendar } from 'lucide-react';

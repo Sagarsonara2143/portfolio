@@ -1,5 +1,4 @@
 'use client';
-/* eslint-disable */
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Download, FileText, CheckCircle, Eye, Printer } from 'lucide-react';
@@ -18,7 +17,7 @@ export default function ResumeSection() {
   const inView = useInView(ref, { once:true, margin:'-80px' });
 
   return (
-    <section id="resume" ref={ref} style={{ padding:'100px 24px', position:'relative', overflow:'hidden' }}>
+    <section id="resume" ref={ref} className="resume-section" style={{ padding:'100px 24px', position:'relative', overflow:'hidden' }}>
       <div className="dot-bg" style={{ position:'absolute', inset:0, opacity:.18 }}/>
       <div className="orb" style={{ width:400, height:400, background:'rgba(37,99,235,0.05)', top:'50%', right:'-100px', transform:'translateY(-50%)' }}/>
       <div style={{ maxWidth:1100, margin:'0 auto', position:'relative', zIndex:1 }}>
@@ -102,6 +101,17 @@ export default function ResumeSection() {
           </motion.div>
         </div>
       </div>
+      <style>{`
+        @media print {
+          .resume-section { padding: 0 !important; background: white !important; }
+          .resume-section .dot-bg, .resume-section .orb { display: none !important; }
+          .resume-section .chip { display: none !important; }
+          .resume-grid { display: block !important; }
+          .resume-features { page-break-inside: avoid; }
+          .btn { display: none !important; }
+        }
+        @media(max-width:768px) { .resume-grid { grid-template-columns:1fr !important; } }
+      `}</style>
     </section>
   );
 }

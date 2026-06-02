@@ -1,5 +1,4 @@
 'use client';
-/* eslint-disable */
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Download } from 'lucide-react';
@@ -15,9 +14,10 @@ export default function FloatingResumeButton() {
   }, []);
 
   return (
-    <AnimatePresence>
+    <AnimatePresence mode="wait">
       {show && (
         <motion.a
+          key="floating-resume"
           href="/resume.pdf"
           download="sagar_sonara_python_3_yrs_exp.pdf"
           initial={{ opacity:0, y:20, scale:.9 }}
@@ -26,6 +26,7 @@ export default function FloatingResumeButton() {
           whileHover={{ scale:1.05 }}
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
+          className="floating-resume-btn"
           style={{
             position:'fixed', bottom:28, right:28, zIndex:40,
             display:'flex', alignItems:'center', gap:8,
@@ -38,15 +39,24 @@ export default function FloatingResumeButton() {
           }}
         >
           <Download size={18} style={{ flexShrink:0 }}/>
-          <AnimatePresence>
+          <AnimatePresence mode="wait">
             {hovered && (
-              <motion.span initial={{ width:0, opacity:0 }} animate={{ width:'auto', opacity:1 }} exit={{ width:0, opacity:0 }}
+              <motion.span
+                key="resume-text"
+                initial={{ width:0, opacity:0 }}
+                animate={{ width:'auto', opacity:1 }}
+                exit={{ width:0, opacity:0 }}
                 style={{ fontSize:14, fontWeight:600, overflow:'hidden', display:'inline-block' }}
               >Download Resume</motion.span>
             )}
           </AnimatePresence>
         </motion.a>
       )}
+      <style>{`
+        @media(max-width:768px) {
+          .floating-resume-btn { bottom: 80px !important; right: 16px !important; }
+        }
+      `}</style>
     </AnimatePresence>
   );
 }

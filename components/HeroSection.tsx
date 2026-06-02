@@ -1,5 +1,4 @@
 'use client';
-/* eslint-disable */
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from 'framer-motion';
 import { Download, ArrowRight, GitBranch, Link2, ChevronDown } from 'lucide-react';
@@ -9,9 +8,9 @@ const TITLES = ['Python Developer', 'Django Engineer', 'FastAPI Specialist', 'Ba
 const CODE: [string, string][] = [
   ['from', 'fastapi import FastAPI, Depends'],
   ['from', '.auth import get_current_user, rbac'],
-  ['', ''],
+  ['empty1', ''],
   ['code', 'app = FastAPI(title="Morinox API")'],
-  ['', ''],
+  ['empty2', ''],
   ['deco', '@app.get("/api/v1/engineers")'],
   ['def', 'async def list_engineers('],
   ['param', '    user = Depends(rbac("admin")),'],
