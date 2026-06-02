@@ -24,7 +24,7 @@ function Card({ t }: { t: typeof testimonials[0] }) {
       <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', marginBottom:18 }}>
         <Quote size={26} color={t.color} style={{ opacity:.4 }}/>
         <div style={{ display:'flex', gap:3 }}>
-          {[...Array(t.rating)].map((_,i) => <Star key={i} size={13} fill="#f59e0b" color="#f59e0b"/>)}
+          {[...Array(Math.round(t.rating))].map((_,i) => <Star key={i} size={13} fill="#f59e0b" color="#f59e0b"/>)}
         </div>
       </div>
       <p style={{ fontSize:15, color:'#94a3b8', lineHeight:1.82, marginBottom:22, fontStyle:'italic' }}>

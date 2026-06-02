@@ -217,9 +217,9 @@ export const philosophyCards = [
 ];
 
 export const testimonials = [
-  { id: 1, name: 'Rahul Mehta', role: 'Engineering Manager', company: 'MSBC Group', initials: 'RM', color: '#3b82f6', rating: 5, text: 'Sagar built the entire Morinox backend from scratch — the Stripe integration, RBAC system, and subscription engine were all delivered ahead of schedule. His code quality and architecture decisions are consistently solid.' },
-  { id: 2, name: 'Priya Shah', role: 'Senior Developer', company: 'Cognisun Infotech', initials: 'PS', color: '#0ea5e9', rating: 5, text: 'Working with Sagar was a genuine pleasure. He took ownership of the order management system end-to-end and his query optimizations cut our API response times by 40%. Very strong Python engineer.' },
-  { id: 3, name: 'Arjun Patel', role: 'CTO', company: 'X-Byte Enterprise', initials: 'AP', color: '#22c55e', rating: 5, text: 'Sagar built scraping pipelines that extracted over 100,000 records reliably with anti-bot bypass. His Pandas automation reduced our post-processing effort by over 50%. Highly recommended.' },
+  { id: 1, name: 'Shivam Sharma', role: 'Python - Team Lead', company: 'MSBC Group', initials: 'SS', color: '#3b82f6', rating: 4.5, text: 'Sagar built the entire Morinox backend from scratch — the Stripe integration, RBAC system, and subscription engine were all delivered ahead of schedule. His code quality and architecture decisions are consistently solid.' },
+  { id: 2, name: 'Tirth Togadiya', role: 'Senior Developer', company: 'Cognisun Infotech', initials: 'TT', color: '#0ea5e9', rating: 5, text: 'Working with Sagar was a genuine pleasure. He took ownership of the order management system end-to-end and his query optimizations cut our API response times by 40%. Very strong Python engineer.' },
+  { id: 3, name: 'Krushil Gajjar', role: 'Tech Lead', company: 'X-Byte Enterprise', initials: 'KG', color: '#22c55e', rating: 5, text: 'Sagar built scraping pipelines that extracted over 100,000 records reliably with anti-bot bypass. His Pandas automation reduced our post-processing effort by over 50%. Highly recommended.' },
 ];
 
 export const technologies = [

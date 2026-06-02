@@ -4,11 +4,11 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Download, Menu, X, Terminal } from 'lucide-react';
 
-const LINKS = [
+const LINKS: { label: string; href: string; desktopOnly?: boolean }[] = [
   { label: 'About',        href: '#about' },
   { label: 'Experience',   href: '#experience' },
   { label: 'Projects',     href: '#projects' },
-  { label: 'Architecture', href: '#architecture' },
+  { label: 'Architecture', href: '#architecture', desktopOnly: true },
   { label: 'Contact',      href: '#contact' },
 ];
 
@@ -25,12 +25,18 @@ export default function Navbar() {
 
   useEffect(() => {
     const ids = LINKS.map(l => l.href.slice(1));
-    const obs = new IntersectionObserver(
-      es => es.forEach(e => { if (e.isIntersecting) setActive('#' + e.target.id); }),
-      { rootMargin: '-40% 0px -55% 0px' },
-    );
-    ids.forEach(id => { const el = document.getElementById(id); if (el) obs.observe(el); });
-    return () => obs.disconnect();
+    const onScroll = () => {
+      const scrollY = window.scrollY + 80;
+      let current = '';
+      for (const id of ids) {
+        const el = document.getElementById(id);
+        if (el && el.offsetTop <= scrollY) current = '#' + id;
+      }
+      setActive(current);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   const go = (href: string) => {
@@ -74,7 +80,7 @@ export default function Navbar() {
 
           {/* Right */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <a href="/resume.pdf" download="Sagar-Sonara-Resume.pdf" className="btn btn-p hide-mobile" style={{ padding: '8px 16px', fontSize: 13 }}>
+            <a href="/resume.pdf" download="sagar_sonara_python_3_yrs_exp.pdf" className="btn btn-p hide-mobile" style={{ padding: '8px 16px', fontSize: 13 }}>
               <Download size={14} /> Resume
             </a>
             <button onClick={() => setOpen(v => !v)} style={{ background: 'rgba(37,99,235,0.1)', border: '1px solid rgba(37,99,235,0.2)', borderRadius: 8, padding: 8, cursor: 'pointer', color: '#60a5fa', display: 'none' }} className="mobile-menu-btn">
@@ -89,12 +95,12 @@ export default function Navbar() {
           <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: .2 }}
             style={{ position: 'fixed', top: 64, left: 0, right: 0, zIndex: 49, background: 'rgba(6,9,18,0.97)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(37,99,235,0.12)', padding: '12px 24px 20px' }}
           >
-            {LINKS.map((l, i) => (
+            {LINKS.filter(l => !l.desktopOnly).map((l, i) => (
               <motion.button key={l.href} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * .05 }} onClick={() => go(l.href)}
                 style={{ display: 'block', width: '100%', textAlign: 'left', padding: '12px 16px', borderRadius: 10, border: 'none', cursor: 'pointer', background: active === l.href ? 'rgba(37,99,235,0.1)' : 'transparent', color: active === l.href ? '#60a5fa' : '#94a3b8', fontSize: 15, fontWeight: 500, marginBottom: 4 }}
               >{l.label}</motion.button>
             ))}
-            <a href="/resume.pdf" download="Sagar-Sonara-Resume.pdf" className="btn btn-p" style={{ marginTop: 12, width: '100%', justifyContent: 'center', textDecoration: 'none' }}>
+            <a href="/resume.pdf" download="sagar_sonara_python_3_yrs_exp.pdf" className="btn btn-p" style={{ marginTop: 12, width: '100%', justifyContent: 'center', textDecoration: 'none' }}>
               <Download size={14} /> Download Resume
             </a>
           </motion.div>

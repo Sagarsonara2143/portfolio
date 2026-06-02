@@ -32,7 +32,7 @@ export default function ResumeSection() {
 
         <div className="resume-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:40, alignItems:'start' }}>
           {/* Features */}
-          <motion.div initial={{ opacity:0, x:-30 }} animate={inView?{opacity:1,x:0}:{}} transition={{ duration:.6, delay:.2 }}>
+          <motion.div className="resume-features" initial={{ opacity:0, x:-30 }} animate={inView?{opacity:1,x:0}:{}} transition={{ duration:.6, delay:.2 }}>
             <div style={{ display:'flex', flexDirection:'column', gap:12 }}>
               {FEATURES.map((f,i) => (
                 <motion.div key={f.title} initial={{ opacity:0, x:-18 }} animate={inView?{opacity:1,x:0}:{}} transition={{ delay:.3+i*.07 }}

@@ -59,7 +59,7 @@ export default function Footer() {
           <div>
             <h4 style={{ fontSize:11, fontWeight:700, color:'#334155', textTransform:'uppercase', letterSpacing:'.1em', marginBottom:14 }}>Professional</h4>
             <div style={{ display:'flex', flexDirection:'column', gap:10 }}>
-              <a href="/resume.pdf" download="Sagar-Sonara-Resume.pdf" className="btn btn-p" style={{ padding:'9px 16px', fontSize:13, textDecoration:'none' }}><Download size={13}/>Download Resume</a>
+              <a href="/resume.pdf" download="sagar_sonara_python_3_yrs_exp.pdf" className="btn btn-p" style={{ padding:'9px 16px', fontSize:13, textDecoration:'none' }}><Download size={13}/>Download Resume</a>
               <div style={{ display:'flex', alignItems:'center', gap:6, fontSize:13, color:'#475569' }}><MapPin size={12}/>{personalInfo.location}</div>
               <div style={{ display:'flex', alignItems:'center', gap:7 }}>
                 <span style={{ width:7, height:7, borderRadius:'50%', background:'#22c55e', boxShadow:'0 0 8px rgba(34,197,94,0.6)', display:'inline-block' }}/>

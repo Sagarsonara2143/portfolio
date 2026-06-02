@@ -24,7 +24,7 @@ export default function GitHubSection() {
   const inView = useInView(ref, { once:true, margin:'-80px' });
 
   return (
-    <section id="github" ref={ref} style={{ padding:'100px 24px', background:'#0b0f1a', position:'relative', overflow:'hidden' }}>
+    <section id="github" ref={ref} style={{ padding:'100px 24px', background:'#0b0f1a', position:'relative', overflow:'hidden', boxSizing:'border-box', width:'100%' }}>
       <div className="dot-bg" style={{ position:'absolute', inset:0, opacity:.18 }}/>
       <div style={{ maxWidth:1100, margin:'0 auto', position:'relative', zIndex:1 }}>
         <motion.div initial={{ opacity:0, y:20 }} animate={inView?{opacity:1,y:0}:{}} transition={{ duration:.6 }} style={{ textAlign:'center', marginBottom:56 }}>
@@ -34,10 +34,10 @@ export default function GitHubSection() {
           </h2>
         </motion.div>
 
-        <div className="gh-top" style={{ display:'grid', gridTemplateColumns:'260px 1fr', gap:28, marginBottom:28, alignItems:'start' }}>
+        <div className="gh-top" style={{ display:'grid', gridTemplateColumns:'260px 1fr', gap:28, marginBottom:28, alignItems:'start', width:'100%' }}>
           {/* Profile */}
           <motion.div initial={{ opacity:0, x:-20 }} animate={inView?{opacity:1,x:0}:{}} transition={{ delay:.2 }}>
-            <div style={{ background:'rgba(11,15,26,0.9)', border:'1px solid rgba(37,99,235,0.14)', borderRadius:20, padding:'24px', textAlign:'center' }}>
+            <div style={{ background:'rgba(11,15,26,0.9)', border:'1px solid rgba(37,99,235,0.14)', borderRadius:20, padding:'24px', textAlign:'center', boxSizing:'border-box', width:'100%', minWidth:0 }}>
               <div style={{ width:68, height:68, borderRadius:'50%', background:'linear-gradient(135deg,#2563eb,#0ea5e9)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:24, fontWeight:800, color:'#fff', margin:'0 auto 14px', boxShadow:'0 0 28px rgba(37,99,235,0.4)' }}>SS</div>
               <div style={{ fontSize:16, fontWeight:700, color:'#f0f2f8', marginBottom:4 }}>sagarsonara</div>
               <div style={{ fontSize:13, color:'#64748b', marginBottom:14 }}>Python Developer · Ahmedabad, India</div>
@@ -56,31 +56,36 @@ export default function GitHubSection() {
           </motion.div>
 
           {/* Contribution graph */}
-          <motion.div initial={{ opacity:0, x:20 }} animate={inView?{opacity:1,x:0}:{}} transition={{ delay:.3 }}>
+          <motion.div className="hide-mobile" initial={{ opacity:0, x:20 }} animate={inView?{opacity:1,x:0}:{}} transition={{ delay:.3 }}>
             <div style={{ background:'rgba(11,15,26,0.9)', border:'1px solid rgba(37,99,235,0.14)', borderRadius:20, padding:'22px' }}>
               <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:14, flexWrap:'wrap' }}>
                 <Activity size={15} color="#60a5fa"/>
                 <span style={{ fontSize:14, fontWeight:600, color:'#f0f2f8' }}>Contribution Activity</span>
-                <span style={{ fontSize:12, color:'#64748b', marginLeft:'auto' }}>Past 12 months</span>
+                <span style={{ fontSize:12, color:'#64748b' }}>Past 12 months</span>
               </div>
-              {/* Month labels */}
-              <div className="gh-months" style={{ display:'flex', gap:2, marginBottom:4, overflowX:'auto' }}>
-                {MOS.map(m => <span key={m} style={{ flex:1, fontSize:9, color:'#334155', minWidth:0 }}>{m}</span>)}
-              </div>
-              {/* Graph */}
-              <div className="gh-graph" style={{ display:'flex', gap:2, overflowX:'auto', paddingBottom:4 }}>
-                {Array.from({length:52},(_,w) => (
-                  <div key={w} style={{ display:'flex', flexDirection:'column', gap:2, flexShrink:0 }}>
-                    {Array.from({length:7},(_,d) => (
-                      <div key={d} style={{ width:11, height:11, borderRadius:3, background:LVL[contrib(w,d)], transition:'transform .1s' }}
-                        onMouseEnter={e=>{ (e.currentTarget as HTMLElement).style.transform='scale(1.3)'; }}
-                        onMouseLeave={e=>{ (e.currentTarget as HTMLElement).style.transform='none'; }}
-                      />
+              {/* Graph container with horizontal scroll */}
+              <div className="gh-graph-wrapper" style={{ overflowX:'auto', WebkitOverflowScrolling:'touch' }}>
+                <div style={{ minWidth:650, width:'fit-content' }}>
+                  {/* Month labels */}
+                  <div style={{ display:'flex', gap:2, marginBottom:4 }}>
+                    {MOS.map(m => <span key={m} style={{ width:50, fontSize:9, color:'#334155', textAlign:'center', flexShrink:0 }}>{m}</span>)}
+                  </div>
+                  {/* Graph */}
+                  <div style={{ display:'flex', gap:2 }}>
+                    {Array.from({length:52},(_,w) => (
+                      <div key={w} style={{ display:'flex', flexDirection:'column', gap:2 }}>
+                        {Array.from({length:7},(_,d) => (
+                          <div key={d} style={{ width:11, height:11, borderRadius:3, background:LVL[contrib(w,d)], transition:'transform .1s' }}
+                            onMouseEnter={e=>{ (e.currentTarget as HTMLElement).style.transform='scale(1.3)'; }}
+                            onMouseLeave={e=>{ (e.currentTarget as HTMLElement).style.transform='none'; }}
+                          />
+                        ))}
+                      </div>
                     ))}
                   </div>
-                ))}
+                </div>
               </div>
-              <div style={{ display:'flex', alignItems:'center', gap:5, marginTop:10, justifyContent:'flex-end' }}>
+              <div style={{ display:'flex', alignItems:'center', gap:5, marginTop:10, justifyContent:'flex-end', flexWrap:'wrap' }}>
                 <span style={{ fontSize:10, color:'#334155' }}>Less</span>
                 {LVL.map((c,i) => <div key={i} style={{ width:11, height:11, borderRadius:3, background:c }}/>)}
                 <span style={{ fontSize:10, color:'#334155' }}>More</span>

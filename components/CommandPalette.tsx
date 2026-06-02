@@ -9,7 +9,7 @@ const CMDS = [
   { id:'experience', label:'Go to Experience', icon: Hash, category:'Navigate', action:()=>document.getElementById('experience')?.scrollIntoView({behavior:'smooth'}) },
   { id:'projects', label:'Go to Projects', icon: Hash, category:'Navigate', action:()=>document.getElementById('projects')?.scrollIntoView({behavior:'smooth'}) },
   { id:'contact', label:'Go to Contact', icon: Hash, category:'Navigate', action:()=>document.getElementById('contact')?.scrollIntoView({behavior:'smooth'}) },
-  { id:'resume', label:'Download Resume', icon: Download, category:'Action', action:()=>{ const a=document.createElement('a'); a.href='/resume.pdf'; a.download='Sagar-Sonara-Resume.pdf'; a.click(); } },
+  { id:'resume', label:'Download Resume', icon: Download, category:'Action', action:()=>{ const a=document.createElement('a'); a.href='/resume.pdf'; a.download='sagar_sonara_python_3_yrs_exp.pdf'; a.click(); } },
   { id:'email', label:'Send Email', icon: Mail, category:'Action', action:()=>window.open('mailto:sagarsonara@example.com') },
   { id:'github', label:'Open GitHub', icon: GitBranch, category:'Links', action:()=>window.open('https://github.com/sagarsonara2143','_blank') },
   { id:'linkedin', label:'Open LinkedIn', icon: ExternalLink, category:'Links', action:()=>window.open('https://linkedin.com/in/sagarsonara','_blank') },
@@ -39,11 +39,11 @@ export default function CommandPalette({ isOpen, onClose }: { isOpen: boolean; o
     <AnimatePresence>
       {isOpen && (
         <motion.div initial={{ opacity:0 }} animate={{ opacity:1 }} exit={{ opacity:0 }} onClick={onClose}
-          style={{ position:'fixed',inset:0,background:'rgba(0,0,0,0.7)',backdropFilter:'blur(8px)',zIndex:200,display:'flex',alignItems:'flex-start',justifyContent:'center',paddingTop:100 }}
+          style={{ position:'fixed',inset:0,background:'rgba(0,0,0,0.7)',backdropFilter:'blur(8px)',zIndex:200,display:'flex',alignItems:'flex-start',justifyContent:'center',padding:'16px',paddingTop:'clamp(20px, 15vh, 100px)' }}
         >
           <motion.div initial={{ opacity:0,scale:0.95,y:-20 }} animate={{ opacity:1,scale:1,y:0 }} exit={{ opacity:0,scale:0.95,y:-20 }} transition={{ duration:0.18 }}
             onClick={e=>e.stopPropagation()}
-            style={{ width:'100%',maxWidth:520,background:'rgba(13,13,26,0.98)',border:'1px solid rgba(99,102,241,0.25)',borderRadius:20,overflow:'hidden',boxShadow:'0 32px 80px rgba(0,0,0,0.6)' }}
+            style={{ width:'100%',maxWidth:520,background:'rgba(13,13,26,0.98)',border:'1px solid rgba(99,102,241,0.25)',borderRadius:'clamp(12px, 4vw, 20px)',overflow:'hidden',boxShadow:'0 32px 80px rgba(0,0,0,0.6)' }}
           >
             {/* Search input */}
             <div style={{ display:'flex',alignItems:'center',gap:12,padding:'16px 20px',borderBottom:'1px solid rgba(99,102,241,0.1)' }}>
@@ -53,7 +53,7 @@ export default function CommandPalette({ isOpen, onClose }: { isOpen: boolean; o
             </div>
 
             {/* Results */}
-            <div style={{ maxHeight:340,overflowY:'auto' }}>
+            <div style={{ maxHeight:'min(340px, 50vh)',overflowY:'auto' }}>
               {filtered.length===0?(
                 <div style={{ padding:'32px',textAlign:'center',color:'#4a4a6a',fontSize:14 }}>No commands found</div>
               ):(

@@ -183,15 +183,22 @@ body {
   .proj-grid   { grid-template-columns: 1fr !important; }
   .arch-grid   { grid-template-columns: 1fr !important; }
   .resume-grid { grid-template-columns: 1fr !important; }
+  .resume-features { display: none !important; }
+  #resume { padding: 64px 16px !important; }
   .contact-grid{ grid-template-columns: 1fr !important; }
   .footer-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
   .gh-top      { grid-template-columns: 1fr !important; }
   .gh-repos    { grid-template-columns: 1fr !important; }
+  #github      { padding: 64px 16px !important; }
+  .gh-graph-wrapper { max-width: calc(100vw - 64px); }
   .phil-grid   { grid-template-columns: 1fr 1fr !important; }
   .stat-strip  { grid-template-columns: 1fr 1fr !important; }
   .side-dots   { display: none !important; }
   .tech-canvas { height: 420px !important; }
-  .gh-graph, .gh-months { -webkit-overflow-scrolling: touch; scrollbar-width: thin; }
+  .gh-graph-wrapper { -webkit-overflow-scrolling: touch; scrollbar-width: thin; scrollbar-color: rgba(37,99,235,0.4) rgba(0,0,0,0.2); }
+  .gh-graph-wrapper::-webkit-scrollbar { height: 6px; }
+  .gh-graph-wrapper::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); border-radius: 10px; }
+  .gh-graph-wrapper::-webkit-scrollbar-thumb { background: rgba(37,99,235,0.4); border-radius: 10px; }
   h1 { font-size: clamp(28px,8vw,44px) !important; }
 }
 @media (max-width: 480px) {

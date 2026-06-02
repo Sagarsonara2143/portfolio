@@ -24,7 +24,7 @@ export default function ArchitectureSection() {
   const inView = useInView(ref, { once:true, margin:'-80px' });
 
   return (
-    <section id="architecture" ref={ref} style={{ padding:'100px 24px', position:'relative', overflow:'hidden' }}>
+    <section id="architecture" ref={ref} className="hide-mobile" style={{ padding:'100px 24px', position:'relative', overflow:'hidden' }}>
       <div className="dot-bg" style={{ position:'absolute', inset:0, opacity:.18 }}/>
       <div className="orb" style={{ width:500, height:500, background:'rgba(37,99,235,0.06)', top:'50%', left:'50%', transform:'translate(-50%,-50%)' }}/>
       <div style={{ maxWidth:1100, margin:'0 auto', position:'relative', zIndex:1 }}>

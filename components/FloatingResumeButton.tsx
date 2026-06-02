@@ -19,7 +19,7 @@ export default function FloatingResumeButton() {
       {show && (
         <motion.a
           href="/resume.pdf"
-          download="Sagar-Sonara-Resume.pdf"
+          download="sagar_sonara_python_3_yrs_exp.pdf"
           initial={{ opacity:0, y:20, scale:.9 }}
           animate={{ opacity:1, y:0, scale:1 }}
           exit={{ opacity:0, y:20, scale:.9 }}

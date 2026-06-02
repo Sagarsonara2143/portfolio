@@ -115,7 +115,7 @@ export default function HeroSection() {
               <button onClick={() => go('#experience')} className="btn btn-p">
                 View Experience <ArrowRight size={15}/>
               </button>
-              <a href="/resume.pdf" download="Sagar-Sonara-Resume.pdf" className="btn btn-s" style={{ textDecoration:'none' }}>
+              <a href="/resume.pdf" download="sagar_sonara_python_3_yrs_exp.pdf" className="btn btn-s" style={{ textDecoration:'none' }}>
                 <Download size={14}/> Resume
               </a>
               <button onClick={() => go('#contact')} className="btn btn-s">Contact</button>
@@ -139,7 +139,7 @@ export default function HeroSection() {
           </motion.div>
 
           {/* ── RIGHT — code card ── */}
-          <motion.div ref={cardRef} initial={{ opacity:0, scale:.95 }} animate={{ opacity:1, scale:1 }} transition={{ duration:.8, ease:'easeOut', delay:.2 }}
+          <motion.div ref={cardRef} className="hide-mobile" initial={{ opacity:0, scale:.95 }} animate={{ opacity:1, scale:1 }} transition={{ duration:.8, ease:'easeOut', delay:.2 }}
             onMouseMove={onMove} onMouseLeave={onLeave} style={{ perspective:1200, position:'relative' }}
           >
             <motion.div style={{ rotateX:rx, rotateY:ry, transformStyle:'preserve-3d' }}>
