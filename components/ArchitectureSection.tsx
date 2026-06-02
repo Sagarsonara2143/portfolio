@@ -1,109 +1,231 @@
 'use client';
 /* eslint-disable */
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { motion, useInView } from 'framer-motion';
 
-const NODES = [
-  { label:'Client Application', sub:'Browser · Mobile · Third-party', color:'#3b82f6', icon:'🌐', detail:'React, Next.js, Mobile Apps, Partner APIs, Postman' },
-  { label:'API Gateway',         sub:'Auth · Rate Limiting · Routing',  color:'#2563eb', icon:'⚡', detail:'NGINX, FastAPI Gateway, JWT Auth, RBAC, CORS' },
-  { label:'Backend Services',    sub:'Business Logic · Processing',      color:'#0ea5e9', icon:'⚙️', detail:'Django DRF, FastAPI, Flask, Celery Workers, Async' },
-  { label:'Database Layer',      sub:'Primary DB · Cache · NoSQL',       color:'#38bdf8', icon:'🗄️', detail:'PostgreSQL, MySQL, MongoDB, Redis — with stored procs & indexing' },
-  { label:'External Integrations', sub:'APIs · Webhooks · Payment',    color:'#7dd3fc', icon:'🔌', detail:'Stripe, Google APIs, WhatsApp, Email, Third-party REST APIs' },
-  { label:'Monitoring & Deployment', sub:'Docker · NGINX · Cloudflare', color:'#bae6fd', icon:'📊', detail:'Docker, NGINX, NSSM, Cloudflare SSL, GitLab CI, 99.9% uptime' },
+const LAYERS = [
+  {
+    name: 'Client Application',
+    sub: 'Browser · Mobile · Third-party',
+    icon: '🌐',
+    icClass: 'ic-blue',
+    tags: ['React', 'Next.js', 'Mobile Apps', 'Partner APIs', 'Postman'],
+  },
+  {
+    name: 'API Gateway',
+    sub: 'Auth · Rate Limiting · Routing',
+    icon: '⚡',
+    icClass: 'ic-amber',
+    tags: ['NGINX', 'FastAPI Gateway', 'JWT Auth', 'RBAC', 'CORS'],
+  },
+  {
+    name: 'Backend Services',
+    sub: 'Business Logic · Processing',
+    icon: '⚙️',
+    icClass: 'ic-purple',
+    tags: ['Django DRF', 'FastAPI', 'Flask', 'Celery Workers', 'Async'],
+  },
+  {
+    name: 'Database Layer',
+    sub: 'Primary DB · Cache · NoSQL',
+    icon: '🗄️',
+    icClass: 'ic-teal',
+    tags: ['PostgreSQL', 'MySQL', 'MongoDB', 'Redis', 'Stored Procs'],
+  },
+  {
+    name: 'External Integrations',
+    sub: 'APIs · Webhooks · Payments',
+    icon: '🔌',
+    icClass: 'ic-coral',
+    tags: ['Stripe', 'Google APIs', 'WhatsApp', 'Email', 'REST APIs'],
+  },
+  {
+    name: 'Monitoring & Deployment',
+    sub: 'Docker · NGINX · Cloudflare',
+    icon: '📊',
+    icClass: 'ic-green',
+    tags: ['Docker', 'NGINX', 'NSSM', 'Cloudflare SSL', 'GitLab CI', '99.9% uptime'],
+  },
 ];
 
-const STATS = [
-  { value:'99.9%', label:'Uptime SLA' },
-  { value:'<150ms', label:'API Response' },
-  { value:'1000+', label:'Concurrent Users' },
-  { value:'0', label:'Downtime Deploys' },
-];
+const IC_STYLES: Record<string, { bg: string; color: string }> = {
+  'ic-blue':   { bg: 'rgba(55,138,221,0.12)',   color: '#5fa8ed' },
+  'ic-amber':  { bg: 'rgba(239,159,39,0.12)',    color: '#f0a83a' },
+  'ic-purple': { bg: 'rgba(124,111,205,0.15)',   color: '#a89fe8' },
+  'ic-teal':   { bg: 'rgba(29,158,117,0.12)',    color: '#2ecfa0' },
+  'ic-coral':  { bg: 'rgba(216,90,48,0.12)',     color: '#e8835a' },
+  'ic-green':  { bg: 'rgba(62,203,148,0.12)',    color: '#3ecb94' },
+};
 
 export default function ArchitectureSection() {
   const ref = useRef<HTMLElement>(null);
-  const inView = useInView(ref, { once:true, margin:'-80px' });
+  const inView = useInView(ref, { once: true, margin: '-80px' });
+  const [active, setActive] = useState(0);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const startAuto = useCallback(() => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => {
+      setActive(prev => (prev + 1) % LAYERS.length);
+    }, 1800);
+  }, []);
+
+  useEffect(() => {
+    startAuto();
+    return () => { if (timerRef.current) clearInterval(timerRef.current); };
+  }, [startAuto]);
+
+  const handleClick = (idx: number) => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = null;
+    setActive(idx);
+  };
 
   return (
-    <section id="architecture" ref={ref} className="hide-mobile" style={{ padding:'100px 24px', position:'relative', overflow:'hidden' }}>
-      <div className="dot-bg" style={{ position:'absolute', inset:0, opacity:.18 }}/>
-      <div className="orb" style={{ width:500, height:500, background:'rgba(37,99,235,0.06)', top:'50%', left:'50%', transform:'translate(-50%,-50%)' }}/>
-      <div style={{ maxWidth:1100, margin:'0 auto', position:'relative', zIndex:1 }}>
-        <motion.div initial={{ opacity:0, y:20 }} animate={inView?{opacity:1,y:0}:{}} transition={{ duration:.6 }} style={{ textAlign:'center', marginBottom:56 }}>
-          <span className="chip" style={{ marginBottom:16, display:'inline-flex' }}>System Design</span>
-          <h2 style={{ fontSize:'clamp(32px,4vw,48px)', fontWeight:800, letterSpacing:'-0.03em', color:'#f0f2f8', marginTop:12 }}>
+    <section
+      id="architecture"
+      ref={ref}
+      className="hide-mobile"
+      style={{ padding: '100px 24px', position: 'relative', overflow: 'hidden' }}
+    >
+      <div className="dot-bg" style={{ position: 'absolute', inset: 0, opacity: 0.18 }} />
+      <div
+        className="orb"
+        style={{ width: 500, height: 500, background: 'rgba(124,111,205,0.06)', top: '50%', left: '50%', transform: 'translate(-50%,-50%)' }}
+      />
+
+      <div style={{ maxWidth: 1100, margin: '0 auto', position: 'relative', zIndex: 1 }}>
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          style={{ textAlign: 'center', marginBottom: 40 }}
+        >
+          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '2.5px', textTransform: 'uppercase', color: 'rgba(255,255,255,0.25)', marginBottom: 10 }}>
+            Architecture
+          </div>
+          <h2 style={{ fontSize: 'clamp(28px,4vw,36px)', fontWeight: 800, letterSpacing: '-1px', color: '#f0eefc', marginBottom: 8 }}>
             How I Build <span className="gt">Systems</span>
           </h2>
-          <p style={{ color:'#475569', fontSize:16, marginTop:12, maxWidth:480, margin:'12px auto 0' }}>A layered architecture approach for every production system</p>
+          <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.3)' }}>
+            A layered approach to every production system I ship
+          </p>
         </motion.div>
 
-        <div className="arch-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:48, alignItems:'start' }}>
-          {/* Flow diagram */}
-          <motion.div initial={{ opacity:0, x:-30 }} animate={inView?{opacity:1,x:0}:{}} transition={{ duration:.6, delay:.2 }}>
-            <div style={{ background:'rgba(11,15,26,0.92)', border:'1px solid rgba(37,99,235,0.14)', borderRadius:24, padding:'26px', overflow:'hidden' }}>
-              <div style={{ display:'flex', alignItems:'center', gap:6, marginBottom:22 }}>
-                {['#ff5f57','#febc2e','#28c840'].map(c => <div key={c} style={{ width:10, height:10, borderRadius:'50%', background:c }}/>)}
-                <span style={{ marginLeft:8, fontSize:12, color:'#1e293b', fontFamily:'monospace' }}>system.architecture</span>
-              </div>
+        {/* Two-column layout */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, alignItems: 'stretch', minWidth: 0 }}>
 
-              {NODES.map((node, i) => (
-                <div key={node.label}>
-                  <motion.div initial={{ opacity:0, x:-16 }} animate={inView?{opacity:1,x:0}:{}} transition={{ delay:.3+i*.09 }}
-                    style={{ display:'flex', alignItems:'center', gap:12, padding:'11px 14px', background:node.color+'0e', border:'1px solid '+node.color+'22', borderRadius:11, cursor:'default', transition:'all .2s' }}
-                    onMouseEnter={e=>{ (e.currentTarget as HTMLElement).style.borderColor=node.color+'55'; (e.currentTarget as HTMLElement).style.background=node.color+'18'; }}
-                    onMouseLeave={e=>{ (e.currentTarget as HTMLElement).style.borderColor=node.color+'22'; (e.currentTarget as HTMLElement).style.background=node.color+'0e'; }}
-                  >
-                    <span style={{ fontSize:18 }}>{node.icon}</span>
-                    <div style={{ flex:1 }}>
-                      <div style={{ fontSize:13, fontWeight:600, color:'#e2e8f0' }}>{node.label}</div>
-                      <div style={{ fontSize:11, color:'#64748b' }}>{node.sub}</div>
-                    </div>
-                    <div style={{ width:7, height:7, borderRadius:'50%', background:node.color, boxShadow:'0 0 8px '+node.color+'80', flexShrink:0 }}/>
-                  </motion.div>
-
-                  {i < NODES.length-1 && (
-                    <div style={{ position:'relative', height:20, display:'flex', alignItems:'center', paddingLeft:24 }}>
-                      <div style={{ width:2, height:'100%', background:'linear-gradient(to bottom,'+node.color+'50,'+NODES[i+1].color+'50)', position:'absolute', left:21 }}/>
-                      <motion.div animate={{ y:[0,5,0], opacity:[.4,1,.4] }} transition={{ duration:1.4, repeat:Infinity, delay:i*.25 }}
-                        style={{ width:5, height:5, borderRadius:'50%', background:node.color, position:'absolute', left:18.5 }}
-                      />
-                    </div>
-                  )}
-                </div>
-              ))}
+          {/* LEFT — terminal card */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            style={{ background: '#111120', border: '0.5px solid rgba(255,255,255,0.08)', borderRadius: 14, overflow: 'hidden', minWidth: 0 }}
+          >
+            {/* Traffic lights bar */}
+            <div style={{ padding: '11px 16px', background: 'rgba(255,255,255,0.03)', borderBottom: '0.5px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', gap: 8 }}>
+              <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#ff5f57' }} />
+              <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#febc2e' }} />
+              <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#28c840' }} />
+              <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.2)', marginLeft: 6, fontFamily: 'monospace' }}>system.architecture</span>
             </div>
-          </motion.div>
 
-          {/* Layer details */}
-          <motion.div initial={{ opacity:0, x:30 }} animate={inView?{opacity:1,x:0}:{}} transition={{ duration:.6, delay:.3 }}>
-            <div style={{ display:'flex', flexDirection:'column', gap:12 }}>
-              {NODES.map((node, i) => (
-                <motion.div key={node.label} initial={{ opacity:0, y:16 }} animate={inView?{opacity:1,y:0}:{}} transition={{ delay:.4+i*.07 }}
-                  style={{ display:'flex', gap:12, padding:'13px 16px', background:'rgba(11,15,26,0.85)', border:'1px solid rgba(37,99,235,0.08)', borderRadius:12, transition:'border-color .2s' }}
-                  onMouseEnter={e=>{ (e.currentTarget as HTMLElement).style.borderColor=node.color+'35'; }}
-                  onMouseLeave={e=>{ (e.currentTarget as HTMLElement).style.borderColor='rgba(37,99,235,0.08)'; }}
-                >
-                  <div style={{ width:34, height:34, borderRadius:9, background:node.color+'18', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0, fontSize:15 }}>{node.icon}</div>
-                  <div>
-                    <div style={{ fontSize:13, fontWeight:600, color:'#e2e8f0', marginBottom:3 }}>{node.label}</div>
-                    <div style={{ fontSize:12, color:'#64748b' }}>{node.detail}</div>
+            {/* Layer rows */}
+            <div style={{ padding: '14px', display: 'flex', flexDirection: 'column', gap: 0 }}>
+              {LAYERS.map((layer, i) => {
+                const ic = IC_STYLES[layer.icClass];
+                const isActive = active === i;
+                return (
+                  <div key={layer.name} style={{ display: 'flex', flexDirection: 'column', alignItems: 'stretch' }}>
+                    <div
+                      onClick={() => handleClick(i)}
+                      style={{
+                        display: 'flex', alignItems: 'center', gap: 12,
+                        background: isActive ? 'rgba(124,111,205,0.1)' : 'rgba(255,255,255,0.04)',
+                        border: `0.5px solid ${isActive ? '#7c6fcd' : 'rgba(255,255,255,0.08)'}`,
+                        borderRadius: 10, padding: '12px 14px', cursor: 'pointer',
+                        transition: 'border-color .2s, background .2s',
+                      }}
+                    >
+                      <div style={{ width: 34, height: 34, borderRadius: 8, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, background: ic.bg, color: ic.color }}>
+                        {layer.icon}
+                      </div>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ fontSize: 13, fontWeight: 700, color: '#e8e6f8' }}>{layer.name}</div>
+                        <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', marginTop: 2 }}>{layer.sub}</div>
+                      </div>
+                      <div style={{
+                        width: 7, height: 7, borderRadius: '50%', flexShrink: 0,
+                        background: isActive ? '#7c6fcd' : 'rgba(124,111,205,0.4)',
+                        border: '1px solid rgba(124,111,205,0.6)',
+                      }} />
+                    </div>
+
+                    {i < LAYERS.length - 1 && (
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: 30, height: 18, position: 'relative' }}>
+                        <div style={{ content: '', position: 'absolute', left: 30, top: 0, bottom: 0, width: 1, background: 'rgba(124,111,205,0.25)' }} />
+                        <div style={{ width: 6, height: 6, borderRight: '1.5px solid rgba(124,111,205,0.5)', borderBottom: '1.5px solid rgba(124,111,205,0.5)', transform: 'rotate(45deg)', marginTop: 6, marginLeft: -3 }} />
+                      </div>
+                    )}
                   </div>
-                </motion.div>
-              ))}
+                );
+              })}
             </div>
           </motion.div>
-        </div>
 
-        {/* Stats strip */}
-        <motion.div initial={{ opacity:0, y:20 }} animate={inView?{opacity:1,y:0}:{}} transition={{ delay:.8 }}
-          style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:16, marginTop:36, padding:'22px', background:'rgba(11,15,26,0.85)', border:'1px solid rgba(37,99,235,0.1)', borderRadius:20 }} className="stat-strip"
-        >
-          {STATS.map(s => (
-            <div key={s.label} style={{ textAlign:'center' }}>
-              <div style={{ fontSize:26, fontWeight:900, letterSpacing:'-0.03em', marginBottom:4 }} className="gt">{s.value}</div>
-              <div style={{ fontSize:13, color:'#475569' }}>{s.label}</div>
-            </div>
-          ))}
-        </motion.div>
+          {/* RIGHT — detail cards */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            style={{ display: 'flex', flexDirection: 'column', gap: 8, minWidth: 0, height: '100%' }}
+          >
+            {LAYERS.map((layer, i) => {
+              const ic = IC_STYLES[layer.icClass];
+              const isActive = active === i;
+              return (
+                <div
+                  key={layer.name}
+                  onClick={() => handleClick(i)}
+                  style={{
+                    background: isActive ? 'rgba(124,111,205,0.09)' : 'rgba(255,255,255,0.03)',
+                    border: `0.5px solid ${isActive ? '#7c6fcd' : 'rgba(255,255,255,0.07)'}`,
+                    borderLeft: isActive ? '2px solid #7c6fcd' : '0.5px solid rgba(255,255,255,0.07)',
+                    borderRadius: 12, padding: '14px 16px',
+                    display: 'flex', alignItems: 'flex-start', gap: 12, flex: 1,
+                    cursor: 'pointer', transition: 'border-color .2s, background .2s',
+                  }}
+                >
+                  <div style={{ width: 36, height: 36, borderRadius: 9, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, background: ic.bg, color: ic.color }}>
+                    {layer.icon}
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontSize: 13, fontWeight: 700, color: '#e8e6f8', marginBottom: 3 }}>{layer.name}</div>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
+                      {layer.tags.map(tag => (
+                        <span
+                          key={tag}
+                          style={{
+                            fontSize: 10, fontWeight: 600,
+                            color: isActive ? '#a89fe8' : 'rgba(255,255,255,0.35)',
+                            background: isActive ? 'rgba(124,111,205,0.12)' : 'rgba(255,255,255,0.05)',
+                            border: `0.5px solid ${isActive ? 'rgba(124,111,205,0.25)' : 'rgba(255,255,255,0.09)'}`,
+                            padding: '2px 7px', borderRadius: 5,
+                            transition: 'color .2s, background .2s, border-color .2s',
+                          }}
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </motion.div>
+
+        </div>
       </div>
     </section>
   );
