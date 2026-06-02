@@ -24,7 +24,20 @@ function Card({ t }: { t: typeof testimonials[0] }) {
       <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', marginBottom:18 }}>
         <Quote size={26} color={t.color} style={{ opacity:.4 }}/>
         <div style={{ display:'flex', gap:3 }}>
-          {[...Array(Math.round(t.rating))].map((_,i) => <Star key={i} size={13} fill="#f59e0b" color="#f59e0b"/>)}
+          {[...Array(5)].map((_, i) => {
+            const full = i < Math.floor(t.rating);
+            const half = !full && i < t.rating;
+            return (
+              <span key={i} style={{ position:'relative', display:'inline-flex', width:13, height:13 }}>
+                <Star size={13} fill="rgba(255,255,255,0.08)" color="rgba(255,255,255,0.08)" style={{ position:'absolute' }}/>
+                {(full || half) && (
+                  <span style={{ position:'absolute', overflow:'hidden', width: half ? '50%' : '100%' }}>
+                    <Star size={13} fill="#f59e0b" color="#f59e0b"/>
+                  </span>
+                )}
+              </span>
+            );
+          })}
         </div>
       </div>
       <p style={{ fontSize:15, color:'#94a3b8', lineHeight:1.82, marginBottom:22, fontStyle:'italic' }}>
